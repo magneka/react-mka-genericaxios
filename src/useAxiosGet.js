@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from "axios";
 
-
 const useAxiosGet = (() => {
 
   const actions = {
@@ -48,8 +47,8 @@ const useAxiosGet = (() => {
 
   const [state, dispatch] = useReducer(dataReducer, initialState)
 
-  const getData = (props) => {      
-    axios.get(props.uri)
+  const getData = (uri) => {      
+    axios.get(uri)
     .then(result => {
       console.log(result);
       dispatch({ type: actions.DATA, data: result.data });

@@ -1,10 +1,10 @@
 import React from "react";
 import "./style.css";
-import useAxiosGet from "./useAxiosGet"
+import useAxiosGet from './useAxiosGet'
 
 export default function App() {
 
-  [getData, state] = useAxiosGet()
+  const [getData, state] = useAxiosGet()
 
   const getFakturaliste = () => {
     getData("http://localhost:5000/api/sak/FakturalisteForSak/1231234")
