@@ -15,14 +15,32 @@ export default function App() {
   }
 
   const postFeilsendt = () => {
-    
-    var data = new FormData();
-    data.append('Saksnr', 'S1234');
-
-    let data2 = {'SaksNr': 'S1234' }
-
-    postFakt("http://localhost:5000/api/sak/SakErFeilsendt", data2)
+    postFakt("/api/sak/SakErFeilsendt", {'SaksNr': 'S1234' })
   }
+
+  const postUtsettSak = () => {
+    postFakt("/api/sak/UtsettSak", {'SaksNr': 'S1234' })
+  }
+
+   const postAvdragsOrdning = () => {
+     let avddata = {  
+        saksnr: 'S20020',
+        terminbelop: 100234.50,
+        terminLengde: '1 MND', 
+        skyldnerEpost: 'kåre@knall.no',
+        skyldnerPnrOrgnr: '1231231233'
+     }
+
+     var formData = new FormData();  
+     formData.append("saksnr", 'S20020')
+     formData.append("terminbelop", 100234.50)
+     formData.append("terminLengde", '1 MND') 
+     formData.append("skyldnerEpost", 'kåre@knall.no')
+     formData.append("skyldnerPnrOrgnr", '1231231233')
+
+     postFakt("/api/sak/OpprettAvdragsOrdning", avddata)
+  }
+
 
  /*
  {"loading":false,"data":{"result":[{"fakturaNr":"F000012","fakturaCaption":"Faktura 012"},{"fakturaNr":"F000013","fakturaCaption":"Faktura 013"},{"fakturaNr":"F000014","fakturaCaption":"Faktura 014"},{"fakturaNr":"F000015","fakturaCaption":"Faktura 015"}]}}
@@ -41,7 +59,9 @@ export default function App() {
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
 
-       <button onClick={postFeilsendt}>Post feilsendt</button>
+       <button onClick={postFeilsendt}>Post feilsendt</button><br/>
+       <button onClick={postUtsettSak}>Post utsett</button><br/>
+       <button onClick={postAvdragsOrdning}>Post avdragsordning</button><br/>
        
        <button onClick={getFakturaliste}>fakturaListe</button>
        <br/>

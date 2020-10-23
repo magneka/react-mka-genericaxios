@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
-//import axiosTokenInstance from './axiosTokenInstance'
-import axios from 'axios'
+import axiosTokenInstance from './axiosTokenInstance'
+//import axios from 'axios'
 
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
 
@@ -49,22 +49,27 @@ const useAxiosPost = (() => {
 
   const [state, dispatch] = useReducer(dataReducer, initialState)
 
+  // 'application/x-www-form-urlencoded',
+  //'multipart/form-data',               
+  //'application/json', 
   let axiosConfig = {
     headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'multipart/form-data', 
         "Access-Control-Allow-Origin": "*",
+         
     }
   };
 
   const postData = (uri, data) => {  
     console.log('posting ', data);    
-    axios({
-      method: 'post',
-      url: uri,
-      data: data
-    })
-    
-    //post(uri, data, headers)
+
+    // Posting
+    axiosTokenInstance.post(uri, data)
+    //({
+      //method: 'post',
+      //url: uri,
+      //data: data // JSON.stringify(data)
+    //})
     .then(result => {
       console.log(result);
       if (result.status === 200)
