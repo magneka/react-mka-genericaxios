@@ -9,9 +9,7 @@ export default function App() {
 
   const [getFakt, faktState] = useAxiosGet()
   const [postFakt, postfaktState] = useAxiosPost()
-
-
-  
+   
   const getFakturaliste = () => {
     getFakt("/api/sak/FakturalisteForSak?saksnr=1231234")
   }
@@ -43,18 +41,11 @@ export default function App() {
      postFakt("/api/sak/OpprettAvdragsOrdning", avddata)
   }
 
-
- /*
- {"loading":false,"data":{"result":[{"fakturaNr":"F000012","fakturaCaption":"Faktura 012"},{"fakturaNr":"F000013","fakturaCaption":"Faktura 013"},{"fakturaNr":"F000014","fakturaCaption":"Faktura 014"},{"fakturaNr":"F000015","fakturaCaption":"Faktura 015"}]}}
-
-      <select>
-        {state.data.result.map((team, i) => <option key={team.fakturaNr} value={team.fakturaNr}>{team.fakturaCaption}</option>)}
-      </select>
-  */
-
   const faktLastet = () => {
     return (faktState && faktState.data && faktState.data.result)
   } 
+
+  const isLoading = () => (postfaktState.loading || postfaktState.loading)
 
   return (
     <div>
@@ -64,11 +55,11 @@ export default function App() {
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
 
-       <button disabled={postfaktState.loading} onClick={postFeilsendt}>Post feilsendt</button><br/>
-       <button onClick={postUtsettSak}>Post utsett</button><br/>
-       <button onClick={postAvdragsOrdning}>Post avdragsordning</button><br/>
+       <button disabled={isLoading()} onClick={postFeilsendt}>Post feilsendt</button><br/>
+       <button disabled={isLoading()} onClick={postUtsettSak}>Post utsett</button><br/>
+       <button disabled={isLoading()} onClick={postAvdragsOrdning}>Post avdragsordning</button><br/>
        
-       <button onClick={getFakturaliste}>fakturaListe</button>
+       <button disabled={isLoading()} onClick={getFakturaliste}>fakturaListe</button>
        <br/>
        <select>
         <option key='' value=''>Velg faktura</option>
@@ -83,7 +74,8 @@ export default function App() {
        {JSON.stringify(faktState)}  
 
         <br/>
-       {JSON.stringify(postfaktState)}       
+       {JSON.stringify(postfaktState)}
+            
 
     </div>
   );
