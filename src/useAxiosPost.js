@@ -1,7 +1,6 @@
 import { useReducer } from 'react';
 import axiosTokenInstance from './axiosTokenInstance'
 import { toast } from 'react-toastify';
-//import axios from 'axios'
 
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
 
