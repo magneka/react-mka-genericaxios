@@ -55,13 +55,12 @@ export default function App() {
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
 
-       <button disabled={isLoading()} onClick={postFeilsendt}>Post feilsendt</button><br/>
-       <button disabled={isLoading()} onClick={postUtsettSak}>Post utsett</button><br/>
-       <button disabled={isLoading()} onClick={postAvdragsOrdning}>Post avdragsordning</button><br/>
-       
-       <button disabled={isLoading()} onClick={getFakturaliste}>fakturaListe</button>
-       <br/>
-       <select>
+      <button disabled={isLoading()} onClick={postFeilsendt}>Post feilsendt</button><br/>
+      <button disabled={isLoading()} onClick={postUtsettSak}>Post utsett</button><br/>
+      <button disabled={isLoading()} onClick={postAvdragsOrdning}>Post avdragsordning</button><br/>
+      
+      <button disabled={isLoading()} onClick={getFakturaliste}>fakturaListe</button><br/>
+      <select>
         <option key='' value=''>Velg faktura</option>
         {faktLastet() &&  faktState.data.result.map((team, i) => 
         <option key={team.fakturaNr} value={team.fakturaNr}>{team.fakturaCaption}</option>
