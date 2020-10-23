@@ -1,5 +1,8 @@
 import React, { useReducer } from 'react';
-import axiosTokenInstance from './axiosTokenInstance'
+//import axiosTokenInstance from './axiosTokenInstance'
+import axios from 'axios'
+
+//https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
 
 const useAxiosGet = (() => {
 
@@ -46,11 +49,31 @@ const useAxiosGet = (() => {
 
   const [state, dispatch] = useReducer(dataReducer, initialState)
 
-  const getData = (uri) => {      
-    axiosTokenInstance.post(uri)
+  let axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+    }
+  };
+
+  const postData = (uri , data, axiosConfig) => {  
+    console.log('posting ', JSON.stringify(data));    
+    axios({
+      method: 'post',
+      url: uri,
+      data: {
+        SaksNr: 'Finn',
+        
+      }
+    })
+    
+    //post(uri, data, headers)
     .then(result => {
       console.log(result);
-      dispatch({ type: actions.DATA, data: result.data });
+      if (result.status === 200)
+        dispatch({ type: actions.DATA, data: result.data });
+      else
+        dispatch({ type: actions.ERROR, error: {statuscode: result.status, statusText: result.statusText }});      
     })
     .catch(error => {
       console.error("error: ", error);

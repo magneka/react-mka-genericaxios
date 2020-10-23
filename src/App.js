@@ -1,13 +1,27 @@
 import React from "react";
 import "./style.css";
 import useAxiosGet from './useAxiosGet'
+import useAxiosPost from './useAxiosPost'
 
 export default function App() {
 
   const [getFakt, faktState] = useAxiosGet()
+  const [postFakt, postfaktState] = useAxiosPost()
+
+
   
   const getFakturaliste = () => {
-    getFakt("http://localhost:5000/api/sak/FakturalisteForSak?saksnr=1231234")
+    getFakt("/api/sak/FakturalisteForSak?saksnr=1231234")
+  }
+
+  const postFeilsendt = () => {
+    
+    var data = new FormData();
+    data.append('Saksnr', 'S1234');
+
+    let data2 = {'SaksNr': 'S1234' }
+
+    postFakt("http://localhost:5000/api/sak/SakErFeilsendt", data2, {})
   }
 
  /*
@@ -27,8 +41,9 @@ export default function App() {
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
 
+       <button onClick={postFeilsendt}>Post feilsendt</button>
+       
        <button onClick={getFakturaliste}>fakturaListe</button>
-
        <br/>
        <select>
         {faktLastet() &&  faktState.data.result.map((team, i) => 
@@ -39,7 +54,10 @@ export default function App() {
   
       
        <br/>
-       {JSON.stringify(faktState)}       
+       {JSON.stringify(faktState)}  
+
+        <br/>
+       {JSON.stringify(postfaktState)}       
 
     </div>
   );
