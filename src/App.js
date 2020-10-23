@@ -46,6 +46,7 @@ export default function App() {
        <button onClick={getFakturaliste}>fakturaListe</button>
        <br/>
        <select>
+        <option key='' value=''>Velg faktura</option>
         {faktLastet() &&  faktState.data.result.map((team, i) => 
         <option key={team.fakturaNr} value={team.fakturaNr}>{team.fakturaCaption}</option>
         )}

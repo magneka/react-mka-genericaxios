@@ -4,7 +4,7 @@ import axios from 'axios'
 
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
 
-const useAxiosGet = (() => {
+const useAxiosPost = (() => {
 
   const actions = {
     POSTING: 'POSTING',
@@ -81,4 +81,4 @@ const useAxiosGet = (() => {
   return [postData, state]
 })
 
-export default useAxiosGet
+export default useAxiosPost
