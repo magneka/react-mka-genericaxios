@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import axiosTokenInstance from './axiosTokenInstance'
+import { ToastContainer, toast } from 'react-toastify';
 //import axios from 'axios'
 
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
@@ -90,6 +91,7 @@ const useAxiosPost = (() => {
     axiosTokenInstance.post(uri, data)
     .then(result => {
       console.log(result);
+      toast.info(`Poster ${data} til ${uri}`);
       if (result.status === 200)
         dispatch({ type: actions.DATA, data: result.data });
       else

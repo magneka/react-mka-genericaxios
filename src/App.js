@@ -1,5 +1,7 @@
 import React from "react";
 import "./style.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useAxiosGet from './useAxiosGet'
 import useAxiosPost from './useAxiosPost'
 
@@ -19,7 +21,7 @@ export default function App() {
   }
 
   const postUtsettSak = () => {
-    postFakt("/api/sak/UtsettSak", {'SaksNr': 'S1234' })
+    postFakt("/api/sak/UtsettSak", {'SaksNr': 'S1234', 'Utsettelse': '30' })
   }
 
    const postAvdragsOrdning = () => {
