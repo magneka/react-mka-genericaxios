@@ -4,6 +4,29 @@ import axiosTokenInstance from './axiosTokenInstance'
 
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
 
+/***********************************************************************
+ * Generic hook for posting to server
+ * 
+ * Uses a interceptor to add token to request. Interceptor will know
+ * the root url to api.
+ * 
+ * use like this:
+ * 
+ * import useAxiosPost from './useAxiosPost'
+ * ..
+ * const [postFakt, postfaktState] = useAxiosPost()
+ * ..
+ * const postUtsettSak = () => {
+ *   postFakt("/api/sak/UtsettSak", {'field1': 'somevalue' })
+ * }
+ * 
+ * 
+ * note: If data object sendt is of FormData, controller method model 
+ * must be annotated with [FromForm].
+ * if data object is plain json, no annotation is to be used in the 
+ * .net controller
+ ***********************************************************************/
+
 const useAxiosPost = (() => {
 
   const actions = {
@@ -65,11 +88,6 @@ const useAxiosPost = (() => {
 
     // Posting
     axiosTokenInstance.post(uri, data)
-    //({
-      //method: 'post',
-      //url: uri,
-      //data: data // JSON.stringify(data)
-    //})
     .then(result => {
       console.log(result);
       if (result.status === 200)
