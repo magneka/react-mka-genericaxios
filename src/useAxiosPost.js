@@ -51,20 +51,17 @@ const useAxiosGet = (() => {
 
   let axiosConfig = {
     headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/x-www-form-urlencoded',
         "Access-Control-Allow-Origin": "*",
     }
   };
 
-  const postData = (uri , data, axiosConfig) => {  
-    console.log('posting ', JSON.stringify(data));    
+  const postData = (uri, data) => {  
+    console.log('posting ', data);    
     axios({
       method: 'post',
       url: uri,
-      data: {
-        SaksNr: 'Finn',
-        
-      }
+      data: data
     })
     
     //post(uri, data, headers)

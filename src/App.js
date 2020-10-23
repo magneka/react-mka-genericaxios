@@ -21,7 +21,7 @@ export default function App() {
 
     let data2 = {'SaksNr': 'S1234' }
 
-    postFakt("http://localhost:5000/api/sak/SakErFeilsendt", data2, {})
+    postFakt("http://localhost:5000/api/sak/SakErFeilsendt", data2)
   }
 
  /*
