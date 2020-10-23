@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import axios from "axios";
+//import axios from "axios";
+import axiosTokenInstance from './axiosTokenInstance'
 
 const useAxiosGet = (() => {
 
@@ -48,7 +49,7 @@ const useAxiosGet = (() => {
   const [state, dispatch] = useReducer(dataReducer, initialState)
 
   const getData = (uri) => {      
-    axios.get(uri)
+    axiosTokenInstance.get(uri)
     .then(result => {
       console.log(result);
       dispatch({ type: actions.DATA, data: result.data });
