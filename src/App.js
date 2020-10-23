@@ -1,9 +1,9 @@
 import React from "react";
 import "./style.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import useAxiosGet from './useAxiosGet'
 import useAxiosPost from './useAxiosPost'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 
@@ -58,10 +58,13 @@ export default function App() {
 
   return (
     <div>
+
+      <ToastContainer />
+
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
 
-       <button onClick={postFeilsendt}>Post feilsendt</button><br/>
+       <button disabled={postfaktState.loading} onClick={postFeilsendt}>Post feilsendt</button><br/>
        <button onClick={postUtsettSak}>Post utsett</button><br/>
        <button onClick={postAvdragsOrdning}>Post avdragsordning</button><br/>
        

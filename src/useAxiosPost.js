@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 import axiosTokenInstance from './axiosTokenInstance'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 //import axios from 'axios'
 
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
@@ -41,19 +41,19 @@ const useAxiosPost = (() => {
     console.log(JSON.stringify(action))
     
     switch (action.type) {
-      case actions.POSTING:
+      case actions.POSTING:        
         return {
           ...state,
           loading: true,
           error: null
         };
-      case actions.DATA:
+      case actions.DATA:        
         return {
           loading: false,
           data: {result: action.data},
-          error: action.error
+          error: null
         };
-      case actions.ERROR:
+      case actions.ERROR:        
         return {
           ...state,
           loading: false,          
@@ -73,34 +73,30 @@ const useAxiosPost = (() => {
 
   const [state, dispatch] = useReducer(dataReducer, initialState)
 
-  // 'application/x-www-form-urlencoded',
-  //'multipart/form-data',               
-  //'application/json', 
-  let axiosConfig = {
-    headers: {
-        'Content-Type': 'multipart/form-data', 
-        "Access-Control-Allow-Origin": "*",
-         
-    }
-  };
-
   const postData = (uri, data) => {  
-    console.log('posting ', data);    
+    console.log('posting ', data);   
+    toast.info(`Sender til server ${JSON.stringify(data)}`);
+    dispatch({ type: actions.POSTING, data: data }); 
 
     // Posting
-    axiosTokenInstance.post(uri, data)
-    .then(result => {
-      console.log(result);
-      toast.info(`Poster ${data} til ${uri}`);
-      if (result.status === 200)
-        dispatch({ type: actions.DATA, data: result.data });
-      else
-        dispatch({ type: actions.ERROR, error: {statuscode: result.status, statusText: result.statusText }});      
-    })
-    .catch(error => {
-      console.error("error: ", error);
-      dispatch({ type: actions.ERROR, error: error });        
-    });
+    axiosTokenInstance
+      .post(uri, data)
+      .then(result => {
+        console.log(result);
+        if (result.status === 200) {
+          dispatch({ type: actions.DATA, data: result.data });
+          toast.success(`Server svarte med ${JSON.stringify(result.data)}`);
+        }
+        else {
+          dispatch({ type: actions.ERROR, error: {statuscode: result.status, statusText: result.statusText }});  
+          toast.error(`Feil oppstod ${result.statusText}`);    
+        }
+      })
+      .catch(error => {
+        console.error("error: ", error);
+        dispatch({ type: actions.ERROR, error: error });     
+        toast.error(`Feil oppstod ${error}`);       
+      });
   } 
 
   return [postData, state]
