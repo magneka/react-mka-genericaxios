@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 
-  const [login, logout, getToken] = useAuth()
+  const [login, logout, getToken, getDecodedToken] = useAuth()
 
   const [getFaktura, fakturaState] = useAxios()
   const [postData, postDataState] = useAxios()
@@ -68,6 +68,7 @@ export default function App() {
   const logout = () => {localStorage.setItem('kf.token', '')}
   */
   const lGetToken = () => {return localStorage.getItem('kf.token')}
+   const gDecodedToken = () => getDecodedToken()
 
   const faktLastet = () => {
     return (fakturaState && fakturaState.data && fakturaState.data.result)
@@ -83,6 +84,7 @@ export default function App() {
 
       <button onClick={login}>Login</button>
       <button onClick={logout}>Logout</button><br/><br/>
+      <button onClick={getDecodedToken}>GetDecodedToken</button><br/><br/>
 
       <button disabled={isLoading()} onClick={postFeilsendt}>Post feilsendt</button><br/>
       <button disabled={isLoading()} onClick={postUtsettSak}>Post utsett</button><br/>
@@ -98,6 +100,7 @@ export default function App() {
 
       <br/>
       Token: {localStorage.getItem('kf.token')}<br/>
+      
       {JSON.stringify(fakturaState)}<br/>
       {JSON.stringify(postDataState)}<br/>
             

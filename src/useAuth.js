@@ -1,4 +1,5 @@
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 
 const useAuth = (() => {
 
@@ -22,11 +23,19 @@ const useAuth = (() => {
       })
   }
 
-  const getToken = () => {() => {return localStorage.getItem('kf.token')}}
+  const getToken = () => localStorage.getItem('kf.token')
   
   const logout = () => localStorage.setItem('kf.token', '')
+
+  const getDecodedToken = () => {
+     //let res = jwt_decode(localStorage.getItem('kf.token'))
+     let res = jwt_decode(getToken())
+     console.log(res)
+     return(res)
+  }
+
  
-  return [login, logout, getToken]
+  return [login, logout, getToken, getDecodedToken]
 })
 
 export default useAuth
