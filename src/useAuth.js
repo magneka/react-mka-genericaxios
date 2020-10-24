@@ -34,8 +34,15 @@ const useAuth = (() => {
      return(res)
   }
 
+  const expirationDate = () => {    
+    let date = new Date(getDecodedToken() * 1000)
+    return date
+  }
+  
+  const roles = () => getDecodedToken()["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+
  
-  return [login, logout, getToken, getDecodedToken]
+  return {login, logout, getToken, getDecodedToken, expirationDate, roles}
 })
 
 export default useAuth

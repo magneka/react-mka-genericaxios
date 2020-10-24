@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 
-  const [login, logout, getToken, getDecodedToken] = useAuth()
+  const {login, logout, getToken, getDecodedToken, expirationDate, roles} = useAuth()
 
   const [getFaktura, fakturaState] = useAxios()
   const [postData, postDataState] = useAxios()
