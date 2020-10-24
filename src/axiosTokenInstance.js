@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const axiosTokenInstance = axios.create({
-    baseURL: 'http://localhost:5000/'
+    baseURL: 'http://localhost:5000/',
+    timeout: 10000
 })
 
 axiosTokenInstance.interceptors.request.use(

@@ -5,19 +5,19 @@ import { toast } from 'react-toastify';
 //https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
 
 /***********************************************************************
- * Generic hook for posting to server
+ * Generic hook for requests to server
  * 
  * Uses a interceptor to add token to request. Interceptor will know
  * the root url to api.
  * 
  * use like this:
  * 
- * import useAxiosPost from './useAxiosPost'
+ * import useAxios from './useAxios'
  * ..
- * const [postFakt, postfaktState] = useAxiosPost()
+ * const [postFakt, postfaktState] = useAxio()
  * ..
  * const postUtsettSak = () => {
- *   postFakt("/api/sak/UtsettSak", {'field1': 'somevalue' })
+ *   postFakt('post', "/api/sak/UtsettSak", {'field1': 'somevalue' }, 'toastmessage')
  * }
  * 
  * 
@@ -75,7 +75,7 @@ const useAxios = (() => {
   const postData = (method, url, data, info) => {  
     
     console.log('posting ', data);   
-    toast.info(`Sender forespørsel til sky om ${info}`);
+    toast.info(`Sender forespørsel vedr: ${info}`);
     dispatch({ type: actions.LOADING, data: data }); 
 
     // Posting
@@ -89,7 +89,7 @@ const useAxios = (() => {
         console.log(result);
         if (result.status === 200) {
           dispatch({ type: actions.DATA, data: result.data });
-          toast.success(`Mottat data fra sky med ${info}`);
+          toast.success(`Mottat data fra sky vedr: ${info}`);
         }
         else {
           dispatch({ type: actions.ERROR, error: {statuscode: result.status, statusText: result.statusText }});  
@@ -99,7 +99,7 @@ const useAxios = (() => {
       .catch(error => {
         console.error("error: ", error);
         dispatch({ type: actions.ERROR, error: error });     
-        toast.error(`Feil oppstod ${info} ${error}`);       
+        toast.error(`Feil oppstod vedr: ${info},  ${error}`);       
       });
   } 
 
