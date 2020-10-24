@@ -25,13 +25,17 @@ const useAuth = (() => {
 
   const getToken = () => localStorage.getItem('kf.token')
   
-  const logout = () => localStorage.setItem('kf.token', '')
+  const logout = () => localStorage.removeItem('kf.token', '')
 
   const getDecodedToken = () => {
      //let res = jwt_decode(localStorage.getItem('kf.token'))
-     let res = jwt_decode(getToken())
-     console.log(res)
-     return(res)
+     let token = getToken()
+     let res = ''
+     if (token) {
+      let res = jwt_decode(getToken())
+      console.log(res)
+     }
+     return(res)     
   }
 
   const expirationDate = () => {    
