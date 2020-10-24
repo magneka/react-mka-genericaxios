@@ -1,25 +1,26 @@
 import React from "react";
 import "./style.css";
-import useAxiosGet from './useAxiosGet'
+import useAxios from './useAxios'
+//import useAxiosGet from './useAxiosGet'
 import useAxiosPost from './useAxiosPost'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 
-  const [getFakt, faktState] = useAxiosGet()
-  const [postFakt, postfaktState] = useAxiosPost()
+  const [getFakt, faktState] = useAxios()
+  const [postFakt, postfaktState] = useAxios()
    
   const getFakturaliste = () => {
-    getFakt("/api/sak/FakturalisteForSak?saksnr=1231234")
+    getFakt('get', "/api/sak/FakturalisteForSak?saksnr=1231234", {}, 'Fakuraliste')
   }
 
   const postFeilsendt = () => {
-    postFakt("/api/sak/SakErFeilsendt", {'SaksNr': 'S1234' })
+    postFakt('post', "/api/sak/SakErFeilsendt", {'SaksNr': 'S1234' }, 'Feilsendt faktura')
   }
 
   const postUtsettSak = () => {
-    postFakt("/api/sak/UtsettSak", {'SaksNr': 'S1234', 'Utsettelse': '30' })
+    postFakt('post', "/api/sak/UtsettSak", {'SaksNr': 'S1234', 'Utsettelse': '30' }, 'Utsett sak')
   }
 
    const postAvdragsOrdning = () => {
@@ -38,7 +39,7 @@ export default function App() {
      formData.append("skyldnerEpost", 'kåre@knall.no')
      formData.append("skyldnerPnrOrgnr", '1231231233')
 
-     postFakt("/api/sak/OpprettAvdragsOrdning", avddata)
+     postFakt('post', "/api/sak/OpprettAvdragsOrdning", avddata, 'Lag avrdagsordning')
   }
 
   const faktLastet = () => {
