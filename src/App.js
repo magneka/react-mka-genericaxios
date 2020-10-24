@@ -1,12 +1,14 @@
 import React from "react";
 import "./style.css";
+import axios from 'axios'
 import useAxios from './useAxios'
-//import useAxiosGet from './useAxiosGet'
-import useAxiosPost from './useAxiosPost'
+import useAuth from './useAuth'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
+
+  const [login, logout, getToken] = useAuth()
 
   const [getFaktura, fakturaState] = useAxios()
   const [postData, postDataState] = useAxios()
@@ -32,8 +34,7 @@ export default function App() {
       skyldnerEpost: 'kåre@knall.no',
       skyldnerPnrOrgnr: '1231231233'
     }
-
-    /*
+   /*
     var formData = new FormData();  
     formData.append("saksnr", 'S20020')
     formData.append("terminbelop", 100234.50)
@@ -44,10 +45,33 @@ export default function App() {
     postData('post', "/api/sak/OpprettAvdragsOrdning", avddata, 'Lag avrdagsordning')
   }
 
+/*
+  const login = () => {
+    const options = {
+      headers: { 'Content-Type': 'application/json' }
+    };
+    axios     
+        .post('http://localhost:5000/api/ApiSecurity/auth', {
+        "Username": "magnea@uc.no",
+        "Password": "P@ssw0rd1!"
+      }, options)
+      .then(res => {
+        //setBearerToken(res.data.token) 
+        localStorage.setItem('kf.token', res.data.token)       
+        console.log(`Token set: ${res.data.token}`)
+        //onFileUpload("F00001", res.data.token)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+  const logout = () => {localStorage.setItem('kf.token', '')}
+  */
+  const lGetToken = () => {return localStorage.getItem('kf.token')}
+
   const faktLastet = () => {
     return (fakturaState && fakturaState.data && fakturaState.data.result)
   } 
-
 
   return (
     <div>
@@ -56,6 +80,9 @@ export default function App() {
 
       <h1>Hello StackBlitz!</h1>
       <p>Start editing to see some magic happen :)</p>
+
+      <button onClick={login}>Login</button>
+      <button onClick={logout}>Logout</button><br/><br/>
 
       <button disabled={isLoading()} onClick={postFeilsendt}>Post feilsendt</button><br/>
       <button disabled={isLoading()} onClick={postUtsettSak}>Post utsett</button><br/>
@@ -69,13 +96,10 @@ export default function App() {
         )}
       </select>       
 
-  
-      
-       <br/>
-       {JSON.stringify(fakturaState)}  
-
-        <br/>
-       {JSON.stringify(postDataState)}
+      <br/>
+      Token: {localStorage.getItem('kf.token')}<br/>
+      {JSON.stringify(fakturaState)}<br/>
+      {JSON.stringify(postDataState)}<br/>
             
 
     </div>
