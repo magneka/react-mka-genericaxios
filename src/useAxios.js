@@ -2,8 +2,6 @@ import { useReducer } from 'react';
 import axiosTokenInstance from './axiosTokenInstance'
 import { toast } from 'react-toastify';
 
-//https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
-
 /***********************************************************************
  * Generic hook for requests to server
  * 
@@ -25,9 +23,14 @@ import { toast } from 'react-toastify';
  * must be annotated with [FromForm].
  * if data object is plain json, no annotation is to be used in the 
  * .net controller
+ * 
+ * info:
+ * https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
  ***********************************************************************/
 
 const useAxios = (() => {
+
+  const showToasts = true;
 
   const actions = {
     LOADING: 'LOADING',
@@ -37,7 +40,7 @@ const useAxios = (() => {
 
   const dataReducer = (state, action) => {
     
-    console.log(JSON.stringify(action))
+    //console.log(JSON.stringify(action))
     
     switch (action.type) {
       case actions.LOADING:        
@@ -48,8 +51,8 @@ const useAxios = (() => {
         };
       case actions.DATA:        
         return {
-          loading: false,
           data: {result: action.data},
+          loading: false,
           error: null
         };
       case actions.ERROR:        
@@ -74,8 +77,8 @@ const useAxios = (() => {
 
   const postData = (method, url, data, info) => {  
     
-    console.log('posting ', data);   
-    toast.info(`Sender forespørsel vedr: ${info}`);
+    console.log(`Requesting: ${method}: ${url}`, data);   
+    (showToasts && toast.info(`Sender forespørsel vedr: ${info}`))
     dispatch({ type: actions.LOADING, data: data }); 
 
     // Posting
@@ -89,17 +92,20 @@ const useAxios = (() => {
         console.log(result);
         if (result.status === 200) {
           dispatch({ type: actions.DATA, data: result.data });
-          toast.success(`Mottat data fra sky vedr: ${info}`);
+          (showToasts && toast.success(`Mottat data fra sky vedr: ${info}`))
         }
         else {
-          dispatch({ type: actions.ERROR, error: {statuscode: result.status, statusText: result.statusText }});  
-          toast.error(`Feil oppstod ved ${info} ${result.statusText}`);    
+          dispatch({ 
+            type: actions.ERROR, 
+            error: {statuscode: result.status, statusText: result.statusText }
+          });  
+          (showToasts && toast.error(`Feil oppstod ved ${info} ${result.statusText}`))   
         }
       })
       .catch(error => {
         console.error("error: ", error);
         dispatch({ type: actions.ERROR, error: error });     
-        toast.error(`Feil oppstod vedr: ${info},  ${error}`);       
+        (showToasts && toast.error(`Feil oppstod vedr: ${info},  ${error}`))
       });
   } 
 
